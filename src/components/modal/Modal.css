@@ -1,0 +1,39 @@
+.modal-root {
+    background-color: var(--dark-grey);
+    position: fixed;
+    inset: 0;
+
+    display: grid;
+    place-items: center;
+
+    /* adjusts the blurred background behind modal */
+    background: #ffffff59;
+    backdrop-filter: blur(3.5px);
+    font-family: "LeagueGothic", "Helvetica Neue", "Helvetica", "Arial";
+    user-select: none;
+}
+
+.modal-root .modal {
+
+    width: fit-content;
+    min-width: 50%;
+
+    /*  adjusts the color of edit lift history card  */
+    background-color: var(--dark-grey);
+    color: var(--white);
+
+    box-shadow: 0 8px 32px 0 var(--light-grey);
+    backdrop-filter: blur(2.5px);
+    -webkit-backdrop-filter: blur(3.5px);
+    border-radius: 10px;
+    padding: 1.5rem;
+}
+
+.modal-root h2 {
+    user-select: none;
+    color: var(--white);
+    font-weight: 800;
+    padding-bottom: 1rem;
+    letter-spacing: 0.5px;
+    margin: 0;
+}

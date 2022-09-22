@@ -1,0 +1,72 @@
+/* * {
+    border: solid green 1px;
+} */
+
+.login-form {
+    width: fit-content;
+    min-width: 50%;
+
+    margin-left: auto;
+    width: 100px;
+
+    color: var(--darkest);
+    font-size: 18pt;
+
+    display: flex;
+    flex-wrap: nowrap;
+    width: fit-content;
+}
+
+.login-form .label-input-group {
+    display: flex;
+    justify-content: right;
+    gap: 1rem;
+}
+
+.login-form .label-input-group.no-display {
+    opacity: 0;
+    user-select: none;
+}
+
+.login-form .label-input-group.no-display>*:hover {
+    cursor: default;
+}
+
+.login-form h4 {
+    margin: 0;
+    margin-bottom: 1.5rem;
+    font-size: 22pt;
+}
+
+input {
+    width: 50%;
+    font-size: 14pt;
+}
+
+label {
+    font-size: 18px;
+}
+
+.signin-textbox,
+.text-box {
+    width: 210pt;
+}
+
+.login-form .password-input-container {
+    margin-top: .2rem;
+    position: relative;
+}
+
+.login-form .eye {
+    position: absolute;
+    bottom: 0.3rem;
+    right: 0.3rem;
+    font-size: 14px;
+    color: var(--teal);
+
+    cursor: pointer;
+}
+
+.login-form button {
+    margin-top: 1rem;
+}

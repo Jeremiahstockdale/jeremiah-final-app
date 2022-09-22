@@ -3,11 +3,30 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './components/homePage/HomePage';
+import NavigatePage from './components/navigatePage/NavigatePage';
+import PaperTradePage from './components/paperTradePage/PaperTradePage';
+import Profile from './components/profile/Profile';
+import LoginPage from './components/loginPage/LoginPage';
+import SignUpPage from './components/signUpPage/SignUpPage';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/navigate" element={<NavigatePage />} />
+          <Route path="/trades" element={<PaperTradePage />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

@@ -1,0 +1,63 @@
+.stock-card-root {
+    color: var(--dark-grey);
+    font-weight: bold;
+    font-size: 20pt;
+    display: flex;
+    margin: auto;
+    width: fit-content;
+}
+
+.stock-card-root .stock-card {
+    margin: 1.5rem auto;
+
+    width: fit-content;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+
+    background-color: var(--teal);
+    border-radius: 5px;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.stock-card-root .stock-card:hover {
+    background-color: var(--blue);
+}
+
+.stock-card-root .symbol-wrapper {
+    text-align: left;
+}
+
+.stock-card-root .symbol {
+    font-weight: bold;
+}
+
+.stock-card-root .value {
+    font-weight: 800;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: right;
+    font-size: 25pt;
+}
+
+.stock-card-root button {
+    height: 4rem;
+    margin: auto;
+}
+
+.stock-card-main .heart>* {
+    color: var(--light-grey);
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.stock-card-main .heart.no-click>*:hover {
+    color: var(--dark-grey);
+}
+
+.stock-card-main .clicked>* {
+    color: var(--orange);
+}

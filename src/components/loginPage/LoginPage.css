@@ -1,0 +1,28 @@
+.entry-page-root {
+    margin: auto;
+    margin-top: 4%;
+
+    padding: 1rem 2rem;
+    background-color: var(--dark-grey);
+    color: var(--white);
+    width: fit-content;
+
+    border-radius: 10px;
+
+    height: 225px;
+}
+
+.entry-page-root .link {
+    margin-top: 1rem;
+}
+
+.entry-page-root .link>* {
+    color: var(--white);
+}
+
+.entry-page-root .link>*:hover {
+    text-decoration: underline;
+    color: var(--orange);
+    cursor: pointer;
+    text-decoration: none;
+}
