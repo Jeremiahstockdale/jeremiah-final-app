@@ -38,10 +38,6 @@ function App() {
     setUser(newUser);
   }
 
-  function login(newUser) {
-    setUser(newUser);
-  }
-
   function logout() {
     unsetUser();
     navigate("/home")

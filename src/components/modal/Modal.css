@@ -11,6 +11,8 @@
     backdrop-filter: blur(3.5px);
     font-family: "LeagueGothic", "Helvetica Neue", "Helvetica", "Arial";
     user-select: none;
+
+    z-index: 1;
 }
 
 .modal-root .modal {

@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
+import LoadingScreen from '../loadingScreen/LoadingScreen'
 
 export default function PaperTradePage() {
+
+    const [likes, setLikes] = useState([])
+
+
     return (
-        <div>PaperTradePage</div>
+        <div>
+            <h1>Coming Soon</h1>
+            <LoadingScreen />
+        </div>
     )
 }

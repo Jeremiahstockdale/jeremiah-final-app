@@ -1,0 +1,50 @@
+.profile-root {
+    --root-margin: 2.5rem;
+    margin: var(--root-margin);
+
+}
+
+.profile-root .address-card {
+    color: var(--blue);
+    font-size: 6rem;
+    margin: auto;
+}
+
+.profile-root .address-name {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+    gap: 1.5rem;
+    align-items: center;
+    text-align: left;
+    width: fit-content;
+}
+
+.profile-root h1 {
+    color: var(--dark-grey);
+    font-size: 3rem;
+    margin: 0;
+}
+
+.profile-root .money {
+    color: var(--teal);
+    font-size: 4rem;
+    margin: 0;
+    margin-bottom: 0;
+}
+
+.profile-root .date {
+    margin-top: .7rem;
+    /* color: var(--dark-grey); */
+}
+
+.breaker {
+    width: calc(100vw - 2 * var(--root-margin));
+    height: 20vh;
+}
+
+.profile-root .disclaimer {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}

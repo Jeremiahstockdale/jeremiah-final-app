@@ -1,0 +1,205 @@
+:root {
+    --pink: rgb(204, 50, 196);
+    --black: black;
+    --water: paleturquoise;
+
+    /* --black: red;
+    --pink: black; */
+}
+
+.oct-root {
+    background-color: var(--water);
+}
+
+/* .oct-root .octopus {
+    position: relative;
+} */
+
+.oct-root .oct-wrapper {
+    position: absolute;
+    left: calc(50vw - 25px);
+    top: calc(50vh - 25px);
+    margin: auto;
+
+    animation: colorChange 6s linear infinite alternate;
+}
+
+.oct-root .oct-head {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: var(--pink);
+
+    display: grid;
+    place-items: center;
+
+    animation: spin 15s 15s ease infinite;
+}
+
+.oct-root .oct-eye {
+    position: absolute;
+    top: 0;
+    height: 9px;
+    width: 6px;
+    border-radius: 50%;
+    background-color: var(--black);
+}
+
+.oct-root .oct-eye.right {
+    right: 0;
+}
+
+.oct-root .oct-eye.left {
+    left: 0;
+}
+
+.oct-root .tentacle-container {
+    animation: spin 15s ease infinite;
+    width: 100%;
+    height: 50px;
+    position: absolute;
+}
+
+.oct-root .oct-tentacle {
+    position: absolute;
+    left: 50%;
+    top: calc(50% - 8px);
+
+    height: 16px;
+
+    transform-origin: left center;
+
+    --angle: calc(var(--order) * 45deg + 22.5deg);
+    transform: rotate(var(--angle));
+
+    --delay: calc(var(--order) * 0.125s);
+    animation: flop 1s var(--delay) linear infinite alternate;
+
+}
+
+.oct-root .arm .segment-actual {
+    background-color: var(--pink);
+    height: 100%;
+
+    width: 16px;
+
+    position: absolute;
+    left: 88%;
+
+    transform-origin: left center;
+    animation: wave 15s .5s infinite alternate ease;
+}
+
+.oct-root .arm .segment-parent {
+    position: relative;
+    height: 100%;
+}
+
+.oct-root .segment-actual.end {
+    border-top-right-radius: 9px;
+    border-bottom-right-radius: 9px;
+}
+
+.oct-root .mouth {
+    width: 5px;
+    aspect-ratio: 1;
+
+    border: transparent solid 0.5px;
+    border-bottom-color: var(--black);
+    border-right-color: var(--black);
+
+    border-radius: 50%;
+    box-sizing: border-box;
+
+    position: absolute;
+    bottom: 0;
+    left: calc(50% - 2.5px);
+
+    transform: rotate(45deg);
+}
+
+.oct-root .face {
+    z-index: 20;
+    width: 40%;
+    height: 30%;
+    margin-top: 20px;
+
+
+    position: relative;
+}
+
+@keyframes flop {
+    from {
+        /* rotation is here just to maintain rotation inside the parent */
+        transform: rotate(var(--angle)) scale(1, 1);
+    }
+
+    to {
+        transform: rotate(var(--angle)) scale(1.1, 0.85);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    10% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(720deg);
+    }
+
+    90% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes shrink {
+    from {
+        transform: scaleY(1);
+    }
+
+    to {
+        transform: scaleY(.5);
+    }
+}
+
+@keyframes wave {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    10% {
+        transform: rotate(-18deg);
+    }
+
+    50% {
+        transform: rotate(11deg);
+    }
+
+    90% {
+        transform: rotate(-18deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+
+}
+
+@keyframes colorChange {
+    from {
+        filter: hue-rotate(-90deg);
+    }
+
+    to {
+        filter: hue-rotate(60deg);
+    }
+}

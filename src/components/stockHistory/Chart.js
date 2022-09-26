@@ -11,7 +11,7 @@ export default function Chart(props) {
     // let { last_bar_idx = 0, bars_wide = 40 } = props;
 
     // last_bar_idx should default to the last bar in the data, or else be sure passed-in value doesn't exceed the last bar
-    // last_bar_idx = last_bar_idx > 0 ? Math.min(last_bar_idx, data.length - 1) : data.length - 1;
+    // last_bar_idx = last_bar_idx > 0 ? Math.min(last_bar_idx, data?.length - 1) : data?.length - 1;
 
     const [mouseCoords, setMouseCoords] = useState({
         x: 0,
@@ -28,8 +28,8 @@ export default function Chart(props) {
     // };
 
     // find the high and low bounds of all the bars being sidplayed
-    const dollar_high = d3.max(data.map(bar => bar.high)) * 1.05;
-    const dollar_low = d3.min(data.map(bar => bar.low)) * 0.95;
+    const dollar_high = d3.max(data?.map(bar => bar.high)) * 1.05;
+    const dollar_low = d3.min(data?.map(bar => bar.low)) * 0.95;
 
     const chart_dims = {
         pixel_width: chart_width,
@@ -79,7 +79,7 @@ export default function Chart(props) {
     };
 
     // calculate the candle width
-    const candle_width = Math.floor((chart_width / data.length) * 0.7);
+    const candle_width = Math.floor((chart_width / data?.length) * 0.7);
 
     return (
 
@@ -92,7 +92,7 @@ export default function Chart(props) {
             onMouseLeave={onMouseLeave}
         >
             {data.map((bar, i) => {
-                const candle_x = (chart_width / (data.length + 1)) * (i + 1);
+                const candle_x = (chart_width / (data?.length + 1)) * (i + 1);
                 return (
                     <Candle
                         key={i}

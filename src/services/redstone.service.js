@@ -57,7 +57,6 @@ export function convertHistoryDataToCandlestickData(data) {
     let low = Infinity;
     let open, close;
     let currentDay = new Date(data[0].timestamp).getDate();
-    let success = true;
 
     for (let i = 0; i < data.length; i++) {
 
@@ -91,6 +90,13 @@ export function convertHistoryDataToCandlestickData(data) {
             open = hourlyData.value;
         } else if (date.getHours() == 16) {
             close = hourlyData.value;
+        }
+
+        if (!open) {
+            open = low;
+        }
+        if (close == 0) {
+            close = open;
         }
 
     }

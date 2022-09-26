@@ -17,12 +17,12 @@ export function deleteAccount({ id }) {
     return axios.delete(`${URL}/users`, { id })
 }
 
-export function addLikedStock({ stockId, userId }) {
-    return axios.post(`${URL}/likes`, { stockId, userId })
+export function addLikedStock({ symbol, userId }) {
+    return axios.post(`${URL}/likes`, { symbol, userId })
 }
 
-export function deleteLikedStock({ id }) {
-    return axios.delete(`${URL}/likes`, { id })
+export function deleteLikedStock(id) {
+    return axios.delete(`${URL}/likes/${id}`)
 }
 
 export function getAllLikedStocks(userId) {

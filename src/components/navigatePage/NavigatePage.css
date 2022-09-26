@@ -4,7 +4,7 @@
 
 .nav-page-root .search-wrapper {
     position: relative;
-    border: solid green 1px;
+    /* border: solid green 1px; */
     width: fit-content;
     margin: auto;
     margin-top: 1rem;
@@ -24,7 +24,14 @@
     cursor: pointer;
 }
 
-
 .nav-page-root button {
     margin: 0 1.5rem;
+}
+
+.liked-stocks {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
 }

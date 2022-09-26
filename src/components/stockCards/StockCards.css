@@ -3,18 +3,19 @@
     font-weight: bold;
     font-size: 20pt;
     display: flex;
+    gap: 1rem;
     margin: auto;
     width: fit-content;
 }
 
 .stock-card-root .stock-card {
-    margin: 1.5rem auto;
+    /* margin: 1rem auto; */
 
-    width: fit-content;
+    width: 300px;
     padding: 1rem;
     display: flex;
     justify-content: space-between;
-    gap: 3rem;
+    margin: 1rem 1rem;
 
     background-color: var(--teal);
     border-radius: 5px;
@@ -48,6 +49,22 @@
     margin: auto;
 }
 
+.stock-card-main .stock-card-heart {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: left;
+    align-items: center;
+    width: fit-content;
+    margin: auto;
+    padding: 0 1rem;
+}
+
+.stock-card-main .heart {
+    width: fit-content;
+    margin-left: 0;
+}
+
 .stock-card-main .heart>* {
     color: var(--light-grey);
     font-size: 2rem;
@@ -60,4 +77,31 @@
 
 .stock-card-main .clicked>* {
     color: var(--orange);
+}
+
+
+.stock-history-root.desktop {
+    position: relative;
+    height: 300px;
+}
+
+.stock-history-root.mobile {
+    position: relative;
+    height: 150px;
+}
+
+.stock-history-root.desktop .load-main {
+    position: absolute;
+    /* bottom: 600px; */
+    top: -200px;
+    left: -360px;
+    /* width: fit-content;
+    align-items: center;
+    border: solid green 1px; */
+}
+
+.stock-history-root.mobile .load-main {
+    position: absolute;
+    top: -370px;
+    left: -70px;
 }

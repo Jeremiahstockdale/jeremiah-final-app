@@ -1,24 +1,16 @@
-.App {
-    font-family: sans-serif;
-    text-align: center;
-}
-
-.sidebar {
-    background-color: #171742;
-}
-
 .content {
     background: rgb(26, 30, 80);
-    background: linear-gradient(45deg,
+    /* background: linear-gradient(45deg,
             rgba(26, 30, 80, 1) 0%,
             rgba(46, 87, 126, 1) 50%,
-            rgba(57, 108, 144, 1) 100%);
-    color: white;
+            rgba(57, 108, 144, 1) 100%); */
+    color: var(--white);
 }
 
 .chart {
-    background-color: #1f234b;
-    color: white;
+    background-color: var(--dark-grey);
+    color: var(--white);
+    border: solid var(--teal) 2px;
 }
 
 .candle {
@@ -26,13 +18,13 @@
 }
 
 .candle.up {
-    fill: #81dfc4;
-    stroke: #81dfc4;
+    fill: var(--teal);
+    stroke: var(--teal);
 }
 
 .candle.down {
-    fill: #d75b6d;
-    stroke: #d75b6d;
+    fill: var(--red);
+    stroke: var(--red);
 }
 
 .wick {
@@ -40,15 +32,15 @@
 }
 
 .wick.up {
-    stroke: #81dfc4;
+    stroke: var(--teal);
 }
 
 .wick.down {
-    stroke: #d75b6d;
+    stroke: var(--red);
 }
 
 .cross_hair {
-    stroke: white;
+    stroke: var(--white);
     stroke-opacity: 70%;
     stroke-dasharray: 3;
 }
