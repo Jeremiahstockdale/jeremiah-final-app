@@ -13,7 +13,6 @@ function useFetch(httpGetFunction, initialPayload, initialState) {
     function reload(payload) {
         httpGetFunction(payload)
             .then(response => {
-                console.log(response.data)
                 setValue(response.data);
             })
             .catch(err => {

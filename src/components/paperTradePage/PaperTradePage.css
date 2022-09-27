@@ -1,0 +1,29 @@
+.paper-trade-page-root .money {
+    color: var(--teal);
+    font-size: 4rem;
+    padding: 0 2rem 0 6rem;
+    /* top right bottm left*/
+    margin: 0;
+    text-align: left;
+    width: fit-content;
+}
+
+.paper-trade-page-root.mobile .money {
+    font-size: 3rem;
+    padding: 0 2rem 0 2.5rem;
+}
+
+.paper-trade-page-root .value-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding-bottom: 1rem;
+}
+
+.paper-trade-page-root .percent {
+    color: var(--blue);
+}
+
+.paper-trade-page-root .percent.negative {
+    color: var(--red);
+}

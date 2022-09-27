@@ -88,7 +88,6 @@ export default function Profile() {
                     placeholder="How much?"
                     step='.01'
                     max='1000'
-                    min='0'
                 />
             </form>}
             <div className='breaker'></div>

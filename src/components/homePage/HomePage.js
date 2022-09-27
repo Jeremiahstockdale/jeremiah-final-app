@@ -1,26 +1,66 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import rd3 from 'react-d3-library'
+import { UserContext } from '../../App'
+import { useFetch } from '../../hooks/useFetch'
+import { getAllLikedStocks, getAllTrades } from '../../services/http.service'
+import { getCurrentStockPriceForAllSymbols } from '../../services/redstone.service'
+import LoadingScreen from '../loadingScreen/LoadingScreen'
+import StockCards from '../stockCards/StockCards'
 
 export default function HomePage() {
 
-    const LineChart = rd3.LineChart;
+    const { activeUser } = useContext(UserContext)
 
-    // LineChart given data in the format {"date","value"} (will be  last 7 days profit)
-    // to  get "value" we need to get all stock names  in trades  where  user Id =  foo
-    // then  use  GetHistoricalPrice and send in  ["TSLA", "BTC"...] (active trades) 4 times for the
-    // last 4 trading days. then one GetPrice  with the  same names for today
-    // then add account_value + sum of (stock "x" price  *  shares owned  of  stock "x") to get "value"
-    // date will come from the 5 Get...Price functions
+    const [isLoading, setIsloading] = useState(true)
+
+    const [activeTrades, reloadActiveTrades] = useFetch(getAllTrades, activeUser?.id, [])
+    const [likedStocks, reloadLikedStocks] = useFetch(getAllLikedStocks, activeUser?.id, [])
+
+    const [stockArray, setstockArray] = useState([])
+
+
+    useEffect(() => {
+        getPriceForCards()
+
+    }, [])
+
+
+    async function getPriceForCards() {
+        let stock = await getCurrentStockPriceForAllSymbols()
+        setstockArray(stock)
+        setIsloading(false)
+        console.log(stock)
+    }
 
 
     return (
         <div>
-            HomePage
-            <br />
-            Chart with your paper trades || 'you havent made any trades yet'
+            <h1>Stocktopus</h1>
 
-            <br />
-            current paper trades with stock cards to the right of the Chart
+
+            <h3>Featured Stocks</h3>
+            {isLoading
+                ? <LoadingScreen />
+                : <div className='liked-stocks'>
+                    {stockArray?.map((fav, i) => (
+                        <StockCards
+                            key={fav?.symbol}
+                            value={fav?.value}
+                            symbol={fav?.symbol}
+                            activeTrades={activeTrades}
+                            likedStocks={likedStocks}
+                        />
+                    ))}
+                </div>
+            }
+            <button
+                className='secondary'
+                onClick={() => {
+                    setIsloading(true);
+                    getPriceForCards()
+                }}>
+                reload
+            </button>
         </div>
     )
 }

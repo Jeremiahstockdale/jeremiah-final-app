@@ -32,3 +32,17 @@ export function getAllLikedStocks(userId) {
 export function getLikedStockById(id) {
     return axios.get(`${URL}/likes/${id}`)
 }
+
+export function addTrade({ symbol, userId, sharePrice, shares }) {
+    return axios.post(`${URL}/trades`, { symbol, userId, sharePrice, shares })
+}
+
+export function deleteTrade(id) {
+    return axios.delete(`${URL}/trades/${id}/`)
+}
+
+// need to update acc value (addMoneyById) before deleting
+// with 'pretendMoney' = shares * price
+export function getAllTrades(userId) {
+    return axios.get(`${URL}/trades/${userId}`)
+}

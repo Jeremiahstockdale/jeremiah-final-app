@@ -10,10 +10,6 @@
     margin-top: 1rem;
 }
 
-.nav-page-root input {
-    width: 250px;
-}
-
 .nav-page-root .magnifying-glass {
     position: absolute;
     bottom: 0.3rem;
@@ -24,14 +20,14 @@
     cursor: pointer;
 }
 
-.nav-page-root button {
-    margin: 0 1.5rem;
-}
-
 .liked-stocks {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     gap: 5px;
+}
+
+.nav-page-root .search {
+    width: 250px;
 }

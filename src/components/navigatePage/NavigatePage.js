@@ -4,10 +4,9 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import './NavigatePage.css'
 import StockCards from '../stockCards/StockCards';
 import { getCurrentStockPrice } from '../../services/redstone.service';
-import { getAllLikedStocks } from '../../services/http.service';
+import { getAllLikedStocks, getAllTrades } from '../../services/http.service';
 import { UserContext } from '../../App';
 import { useFetch } from '../../hooks/useFetch';
-import { useBoolean } from '../../hooks/useBoolean';
 import LoadingScreen from '../loadingScreen/LoadingScreen';
 
 const redstone = require('redstone-api');
@@ -22,43 +21,40 @@ export default function NavigatePage() {
 
     const [successfulFetch, setsuccessfulFetch] = useState(true)
 
-    const [isLoading, toggleIsLoading] = useBoolean(true)
+    const [isLoading, setIsLoading] = useState(true)
+
 
 
     // likedStocks comes in as an array of objects containing the symbol, userId, and id from table 'likes'
     // the api needs an array of symbols
     // the getCurrentStockPrice function returns an object full of objects
     const [likedStocks, reloadLikedStocks] = useFetch(getAllLikedStocks, activeUser?.id, [])
+    const [activeTrades, reloadActiveTrades] = useFetch(getAllTrades, activeUser?.id, [])
 
-    // favStocksObject is the output of the getCurrentStockPrice function
-    const [favStocksObject, setfavStocksObject] = useState({})
-
-    // favStocksArray takes the object and turns it into an array of objects
-    const favStocksArray = Object.entries(favStocksObject).map(([key, value]) => ({ [key]: value }))
-    const propertyNames = Object.getOwnPropertyNames(favStocksObject)
-    console.log(propertyNames, 'propertyNames')
-
-    var runOnce = 0;
+    // the full stock data of my favorites
+    const [favStocks, setFavStocks] = useState([]);
 
 
     useEffect(() => {
-        setTimeout((toggleIsLoading(), 3000))
-    }, [])
-
-
-    useEffect(() => {
-        if (runOnce === 0) {
+        if (likedStocks.length !== 0) {
             getFavs(getFavSymbols(likedStocks))
-            // console.log(likedStocks, 'likedStocks')
-            runOnce = runOnce + 1
+            console.log(likedStocks, 'likedStocks')
         }
     }, [likedStocks])
 
     useEffect(() => {
-        // console.log(favStocksObject, 'favStocksObject')
-        console.log(favStocksArray, 'favStocksArr')
-    }, [favStocksObject])
+        if (favStocks.length !== 0) {
+            //  set loading to 'done'
+            // setIsLoading(false);
+        }
+    }, [favStocks])
 
+
+    /**
+     * convert the data from our API into an array of stock symbols
+     * @param {*} likedStocks {stock_symbol: string}[]
+     * @returns ['AAPL', 'TSLA', '...']
+     */
     function getFavSymbols(likedStocks) {
         let favStocksSymbols = []
         for (let i = 0; i < likedStocks.length; i++) {
@@ -71,12 +67,10 @@ export default function NavigatePage() {
     async function getFavs(favStocksSymbols) {
 
         let favs = await getCurrentStockPrice(favStocksSymbols)
-        // console.log(favs, 'favs before')
+        console.log(favs, 'favs')
 
-        if (favs && favs !== {}) {
-            // console.log(favs, 'favs')
-            setfavStocksObject(favs)
-        }
+        setFavStocks(favs)
+        setIsLoading(false)
     }
 
     function handleSearchChange(e) {
@@ -93,7 +87,7 @@ export default function NavigatePage() {
         setRecentSearch(search)
 
         let stock = await getCurrentStockPrice(search);
-        // console.log(stock)
+        console.log('one  stock', stock)
         if (stock) {
             setStock(stock);
         } else {
@@ -109,6 +103,7 @@ export default function NavigatePage() {
             <div className='search-wrapper'>
                 <form onSubmit={handleSearchSubmit}>
                     <input
+                        className='search'
                         autoFocus
                         type='text'
                         onChange={handleSearchChange}
@@ -128,23 +123,34 @@ export default function NavigatePage() {
                     value={stock.value}
                     symbol={stock?.symbol}
                     likedStocks={likedStocks}
+                    activeTrades={activeTrades}
                 />
             }
 
             {likedStocks.length != 0 && <h3>Liked stocks</h3>}
+
+
             {likedStocks.length == 0 || isLoading
                 ? <LoadingScreen />
                 : <div className='liked-stocks'>
-                    {favStocksArray.map((fav, i) => {
-                        // console.log(fav[propertyNames[i]], 'fav i', i, fav[likedStocks[i].stock_symbol]?.symbol)
-                        return <StockCards
-                            value={fav[propertyNames[i]]?.value}
-                            symbol={fav[propertyNames[i]]?.symbol}
+                    {favStocks.map((fav, i) => (
+                        <StockCards
+                            key={fav.symbol}
+                            value={fav.value}
+                            symbol={fav.symbol}
                             likedStocks={likedStocks}
+                            activeTrades={activeTrades}
                         />
-                    })}
+                    ))}
                 </div>
             }
+            <button
+                className='secondary'
+                onClick={() => {
+                    getFavs(getFavSymbols(likedStocks))
+                }}>
+                reload
+            </button>
         </div>
     )
 }

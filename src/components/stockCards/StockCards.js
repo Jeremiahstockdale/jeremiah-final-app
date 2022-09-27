@@ -2,19 +2,28 @@ import React, { useContext, useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import './StockCards.css'
-import { addLikedStock, deleteLikedStock } from '../../services/http.service';
+import { addLikedStock, addMoneyById, addTrade, deleteLikedStock, deleteTrade } from '../../services/http.service';
 import { UserContext } from '../../App';
 import StockHistory from '../stockHistory/StockHistory';
 import Modal from '../modal/Modal';
 import { useBoolean } from '../../hooks/useBoolean';
 
-export default function StockCards({ symbol, value, likedStocks }) {
+export default function StockCards({ symbol, value, likedStocks, activeTrades }) {
 
-    const { activeUser } = useContext(UserContext)
+    const { activeUser, addFunds } = useContext(UserContext)
     const [isHeartClicked, setIsHeartClicked] = useState(false)
     const [likeId, setlikeId] = useState()
+    const [sharesInput, setSharesInput] = useState()
 
     const [isModalOpen, toggleIsModalOpen] = useBoolean(false)
+
+    const [userOwnsThis, setUserOwnsThis] = useState()
+
+    const [trade, setTrade] = useState({
+        shares: 0,
+        id: ''
+    })
+    // console.log(activeTrades, ' test')
 
     var userId = activeUser?.id;
     var formatter = new Intl.NumberFormat('en-US', {
@@ -23,11 +32,18 @@ export default function StockCards({ symbol, value, likedStocks }) {
     })
 
     useEffect(() => {
-        likedCheck()
+        likedCheck();
+        // ownCheck();
     }, [symbol])
 
+    useEffect(() => {
+        ownCheck();
+    }, [isModalOpen])
+
+
+
     function likedCheck() {
-        for (let i = 0; i < likedStocks.length; i++) {
+        for (let i = 0; i < likedStocks?.length; i++) {
             const element = likedStocks[i];
             if (symbol == element.stock_symbol) {
                 setlikeId(element.id)
@@ -38,17 +54,85 @@ export default function StockCards({ symbol, value, likedStocks }) {
         setIsHeartClicked(false)
     }
 
+    function ownCheck() {
+        for (let i = 0; i < activeTrades?.length; i++) {
+            const element = activeTrades[i];
+            if (symbol == element.stock_symbol) {
+                setUserOwnsThis(true);
+                setTrade({
+                    ...trade,
+                    id: element.id,
+                    shares: element.shares
+                })
+                return;
+            }
+        }
+    }
+
+    function handleInputChange(e) {
+        let { value } = e.target;
+        let newValue = Number(value)
+        setSharesInput(newValue)
+    }
+
     function handleHeartClicked() {
         if (!isHeartClicked) {
-            console.log(symbol, userId, 'symbol userid')
+            // console.log(symbol, userId, 'symbol userid')
             addLikedStock({ symbol, userId })
             setIsHeartClicked(true)
         } else {
             let id = likeId
-            console.log(id, symbol)
             deleteLikedStock(id)
             setIsHeartClicked(false)
         }
+    }
+
+    function handleBuySubmit(e) {
+        e.preventDefault()
+
+        let sharePrice = value;
+        let shares = sharesInput;
+        addTrade({ symbol, userId, sharePrice, shares })
+            .then(response => {
+                setUserOwnsThis(true);
+
+                let id = activeUser.id;
+                let cost = (-1) * (sharePrice * shares);
+                let pretendMoney = Number(activeUser.account_value) + Number(cost)
+
+                addMoneyById({ id, pretendMoney })
+                    .then(response => {
+                        addFunds(cost)
+                    })
+                    .catch((err) => {
+                        console.error(err)
+                    })
+            })
+            .catch((err) => { console.error(err) })
+            .finally(() => { toggleIsModalOpen() })
+    }
+
+    function handleSellClicked() {
+        // toggleIsModalOpen()
+
+        let sharePrice = value;
+        let id = activeUser.id;
+        let cost = (sharePrice * trade.shares);
+        let pretendMoney = Number(activeUser.account_value) + Number(cost)
+
+        addMoneyById({ id, pretendMoney })
+            .then(response => {
+                addFunds(cost);
+                deleteTrade(trade.id)
+            })
+            .catch((err) => {
+                console.error(err)
+            })
+            .finally(() => {
+                toggleIsModalOpen();
+                setUserOwnsThis(false);
+                window.location.reload();
+            })
     }
 
     return (
@@ -70,6 +154,7 @@ export default function StockCards({ symbol, value, likedStocks }) {
                 </div>
             </div>
 
+
             {isModalOpen && (
                 <Modal title={symbol + " - " + formatter.format(value)}
                     closeModal={toggleIsModalOpen} >
@@ -77,8 +162,12 @@ export default function StockCards({ symbol, value, likedStocks }) {
                     <StockHistory symbol={symbol} />
                     <p>60 day history</p>
 
-                    {/* TODO: add buy/sell functionality */}
-                    <form onSubmit={() => { }}>
+                    {userOwnsThis
+                        ? <p>You own {trade.shares} share(s) worth {formatter.format(trade.shares * value)}</p>
+                        : <p>{value * sharesInput > 0 ? formatter.format(value * sharesInput) : '.'}</p>
+                    }
+
+                    <form onSubmit={handleBuySubmit}>
 
                         {/* buttons */}
                         <div className='button wrapper'>
@@ -90,12 +179,32 @@ export default function StockCards({ symbol, value, likedStocks }) {
                                 Close
                             </button>
 
-                            <button
-                                type='submit'
-                                className='primary'
-                            >
-                                Buy || Sell
-                            </button>
+                            {!userOwnsThis
+                                ? <>
+                                    <button
+                                        type='submit'
+                                        className='primary'
+                                    >
+                                        Buy
+                                    </button>
+
+                                    <input
+                                        type='number'
+                                        placeholder='# of shares'
+                                        onChange={handleInputChange}
+                                        name='sharesInput'
+                                        value={sharesInput}
+                                        required
+                                    />
+                                </>
+                                : <button
+                                    type='button'
+                                    className='primary'
+                                    onClick={handleSellClicked}
+                                >
+                                    Sell Shares
+                                </button>
+                            }
                         </div>
                     </form>
                 </Modal>

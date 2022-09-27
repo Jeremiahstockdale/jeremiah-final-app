@@ -1,12 +1,29 @@
+import { useState } from 'react';
+
 const redstone = require('redstone-api');
 
 // get by symbol
 
 export async function getCurrentStockPrice(symbol) {
     try {
-        const stock = await redstone.getPrice(symbol)
-        // console.log('returning', stock)
-        return stock
+        const data = await redstone.getPrice(symbol)
+        console.log('returning', data)
+        // if the response is an object with an ID, that means it is
+        //  the data for one single stock
+        // else it would be a nested object of objects with
+        //  multiple stock's data
+        if (data.id) {
+            return data
+        } else {
+            let stocks = [];
+            for (let symbol in data) {
+                console.log(symbol)
+                let stock = data[symbol]
+                stocks.push(stock);
+            }
+            console.log("output", stocks)
+            return stocks;
+        }
     } catch (err) {
         console.log(err);
         return undefined;
@@ -15,9 +32,19 @@ export async function getCurrentStockPrice(symbol) {
 
 export async function getCurrentStockPriceForAllSymbols() {
     try {
-        const stocks = await redstone.getPrice(["AAPL", "TSLA", "AMZN", "DIS", "MSFT", "PINS", "TDOC", "GOOG", "FB", "NFLX", "SHOP", "IBM", "COST", "MA", "NKE", "SPOT"])
-        console.log('returning', stocks)
-        return stocks
+        const data = await redstone.getPrice(["AAPL", "AMZN", "DIS", "MSFT", "PINS", "TDOC", "GOOG", "FB", "NFLX", "SHOP", "IBM", "COST", "MA", "NKE", "SPOT"])
+        if (data.id) {
+            return data
+        } else {
+            let stocks = [];
+            for (let symbol in data) {
+                console.log(symbol)
+                let stock = data[symbol]
+                stocks.push(stock);
+            }
+            console.log("returning", stocks)
+            return stocks;
+        }
     } catch (err) {
         console.log(err);
         return undefined;
@@ -161,4 +188,25 @@ export async function getHistoricalDataInTimeWindow(symbol, startDate, endDate) 
         console.log(err);
         return undefined;
     }
+}
+
+export async function convertStockDataForCards(stocks) {
+
+    // const [stocksObject, setStocksObject] = useState({})
+    // const stocksArray = Object.entries(stocksObject).map(([key, value]) => ({ [key]: value }))
+    // const propertyNames = Object.getOwnPropertyNames(stocksObject)
+
+    // let symbols = []
+    // for (let i = 0; i < stocks.length; i++) {
+    //     symbols.push(stocks[i].stock_symbol)
+    // }
+
+    // let myStocks = await getCurrentStockPrice(symbols)
+
+    // if (myStocks && myStocks !== {}) {
+    //     // console.log(myStocks, 'myStocks')
+    //     setStocksObject(myStocks)
+    // }
+
+    // return [stocksArray, propertyNames]
 }

@@ -11,7 +11,7 @@ export default function LoadingScreen() {
                         {Array(8).fill('').map((value, i) => (
                             <div key={i}
                                 style={{ "--order": i }}
-                                class="oct-tentacle arm">
+                                className="oct-tentacle arm">
                                 <div className='segment-actual'>
                                     <div className='segment-parent'>
                                         <div className='segment-actual'>
@@ -26,7 +26,7 @@ export default function LoadingScreen() {
                         ))}
                     </div>
 
-                    <div class="oct-head">
+                    <div className="oct-head">
                         <div className='face'>
                             <div className="oct-eye left"></div>
                             <div className="oct-eye right"></div>
