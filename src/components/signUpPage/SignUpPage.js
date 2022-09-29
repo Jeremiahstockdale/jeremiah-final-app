@@ -6,6 +6,7 @@ export default function SignUpPage() {
 
     return (
         <div className='entry-page-root'>
+
             <SignUpForm />
 
             <div className='link'>

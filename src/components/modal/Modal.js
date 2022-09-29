@@ -8,13 +8,8 @@ export default function Modal({ title, children, closeModal }) {
 
     function handleBackgroundClicked(e) {
 
-        console.log("modal clicked somewhere")
-
         if (e.target === backgroundRef.current) {
-            console.log("background was clicked")
             closeModal && closeModal();
-        } else {
-            console.log("not exactly the background")
         }
     }
 
@@ -22,11 +17,15 @@ export default function Modal({ title, children, closeModal }) {
     return (
         <div className='modal-root'
             onClick={handleBackgroundClicked}
-            ref={backgroundRef}>
+            ref={backgroundRef}
+        >
+
             <div className='modal'>
+
                 <h2>{title}</h2>
                 {children}
             </div>
+
         </div>
     )
 }

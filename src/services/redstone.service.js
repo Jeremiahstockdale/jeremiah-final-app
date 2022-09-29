@@ -1,8 +1,5 @@
-import { useState } from 'react';
 
 const redstone = require('redstone-api');
-
-// get by symbol
 
 export async function getCurrentStockPrice(symbol) {
     try {
@@ -17,7 +14,6 @@ export async function getCurrentStockPrice(symbol) {
         } else {
             let stocks = [];
             for (let symbol in data) {
-                console.log(symbol)
                 let stock = data[symbol]
                 stocks.push(stock);
             }
@@ -32,7 +28,9 @@ export async function getCurrentStockPrice(symbol) {
 
 export async function getCurrentStockPriceForAllSymbols() {
     try {
+
         const data = await redstone.getPrice(["AAPL", "AMZN", "DIS", "MSFT", "PINS", "TDOC", "GOOG", "FB", "NFLX", "SHOP", "IBM", "COST", "MA", "NKE", "SPOT"])
+
         if (data.id) {
             return data
         } else {
@@ -45,13 +43,13 @@ export async function getCurrentStockPriceForAllSymbols() {
             console.log("returning", stocks)
             return stocks;
         }
+
     } catch (err) {
         console.log(err);
         return undefined;
     }
 }
 
-// get 6 months data by symbol
 
 export async function getSixMonthStockHistory(symbol) {
 
@@ -62,12 +60,12 @@ export async function getSixMonthStockHistory(symbol) {
     sixMonthsAgo.setHours(sixMonthsAgo.getHours() - 1); // gets one more bit of data
 
     let stock = await getHistoricalDataInTimeWindow(symbol, sixMonthsAgo, today)
-    // console.log(stock, 'before filter')
-    // stock = stock?.filter((day, i) => i % 24 == 0 || i === stock.length - 1)
-    // console.log(stock, 'after filter')
+
+
     return stock;
 
 }
+
 /**
  * data:  {
         ...
@@ -130,17 +128,6 @@ export function convertHistoryDataToCandlestickData(data) {
 
     return dataByDay;
 
-    // data is array of many items for one day
-    // loop thorugh every item
-
-    // find max and min in array
-    // the data at hour 9 is open price
-    // the data at hour 16 is close price
-    // if the item is not the same day as the previous item, 
-    // push data (max, min, open, close)
-    // reset the values for the next 'day' (24 items)
-
-
 }
 
 export async function getSixMonthOpenAndCloseData(symbol) {
@@ -154,8 +141,6 @@ export async function getSixMonthOpenAndCloseData(symbol) {
 
     let stock = await getHistoricalDataInTimeWindow(symbol, sixMonthsAgo, today)
 
-    // console.log(new Date(stock[0].timestamp).getHours());
-    // console.log(new Date(stock[stock.length - 1].timestamp).getHours());
     stock = stock?.filter((day, i) => {
         let date = new Date(day.timestamp)
         // if open or close time
@@ -172,7 +157,6 @@ export async function getSixMonthOpenAndCloseData(symbol) {
     return stock;
 }
 
-
 export async function getHistoricalDataInTimeWindow(symbol, startDate, endDate) {
     try {
         var stock = await redstone.getHistoricalPrice(symbol, {
@@ -188,25 +172,4 @@ export async function getHistoricalDataInTimeWindow(symbol, startDate, endDate) 
         console.log(err);
         return undefined;
     }
-}
-
-export async function convertStockDataForCards(stocks) {
-
-    // const [stocksObject, setStocksObject] = useState({})
-    // const stocksArray = Object.entries(stocksObject).map(([key, value]) => ({ [key]: value }))
-    // const propertyNames = Object.getOwnPropertyNames(stocksObject)
-
-    // let symbols = []
-    // for (let i = 0; i < stocks.length; i++) {
-    //     symbols.push(stocks[i].stock_symbol)
-    // }
-
-    // let myStocks = await getCurrentStockPrice(symbols)
-
-    // if (myStocks && myStocks !== {}) {
-    //     // console.log(myStocks, 'myStocks')
-    //     setStocksObject(myStocks)
-    // }
-
-    // return [stocksArray, propertyNames]
 }

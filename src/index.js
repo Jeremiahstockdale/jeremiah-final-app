@@ -10,6 +10,7 @@ import PaperTradePage from './components/paperTradePage/PaperTradePage';
 import Profile from './components/profile/Profile';
 import LoginPage from './components/loginPage/LoginPage';
 import SignUpPage from './components/signUpPage/SignUpPage';
+import NotFoundPage from './components/notFoundPage/NotFoundPage';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -24,6 +25,7 @@ root.render(
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

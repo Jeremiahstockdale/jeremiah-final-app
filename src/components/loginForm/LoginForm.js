@@ -11,13 +11,15 @@ import { UserContext } from '../../App';
 export default function LoginForm() {
 
     const { login } = useContext(UserContext)
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-    const navigate = useNavigate();
 
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [user, setUser] = useState({
         username: '',
         password: ''
     })
+
+    const navigate = useNavigate();
+
 
     function handleEntryFormChange(e) {
         const { name, value } = e.target;
@@ -28,7 +30,6 @@ export default function LoginForm() {
     }
 
     function handleFormSubmit(e) {
-
         e.preventDefault();
 
         httpLogin(user)
@@ -40,13 +41,18 @@ export default function LoginForm() {
             .catch(() => { })
     }
 
+
     return (
         <div className='login-form'>
+
             <form onSubmit={handleFormSubmit}>
+
                 <h4>Login</h4>
 
                 <div className='inputs-container'>
+
                     <div className='label-input-group'>
+
                         <label>Username: </label>
                         <input autoFocus className='text-box'
                             type='text'
@@ -55,9 +61,11 @@ export default function LoginForm() {
                             onChange={handleEntryFormChange}
                             placeholder="username"
                         />
+
                     </div>
 
                     <div className='label-input-group password-input-container'>
+
                         <label>Password: </label>
                         <input className='text-box'
                             type={!isPasswordVisible ? 'password' : 'text'}
@@ -66,12 +74,15 @@ export default function LoginForm() {
                             onChange={handleEntryFormChange}
                             placeholder="password"
                         />
+
                         <div className='eye' onClick={() => setIsPasswordVisible(!isPasswordVisible)}>
                             <FontAwesomeIcon icon={isPasswordVisible ? faEyeSlash : faEye} />
                         </div>
+
                     </div>
 
                     <div className='label-input-group password-input-container no-display'>
+
                         <label>Confirm Password: </label>
                         <input className='text-box'
                             type={!isPasswordVisible ? 'password' : 'text'}
@@ -80,15 +91,15 @@ export default function LoginForm() {
                             onChange={() => { }}
                             placeholder="password"
                         />
+
                     </div>
 
                     <button type='submit'
                         className='secondary'>
                         Log in
                     </button>
+
                 </div>
-
-
             </form>
         </div>
     )

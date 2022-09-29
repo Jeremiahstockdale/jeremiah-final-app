@@ -1,0 +1,23 @@
+{
+    "TSLA": "Tesla",
+    "AAPL": "Apple",
+    "IBM": "IBM",
+    "AMZN": "Amazon",
+    "GOOG": "Alphabet",
+    "COST": "Costco",
+    "DIS": "Disney",
+    "FB": "Facebook",
+    "MA": "Mastercard",
+    "MSFT": "Microsoft",
+    "NFLX": "Netflix",
+    "NKE": "Nike",
+    "PINS": "Pinterest",
+    "SHOP": "Shopify",
+    "SPOT": "Spotify",
+    "TDOC": "Teladoc Health",
+    "CL=F": "Crude Oil WTI",
+    "DOGE": "Dogecoin",
+    "BTC": "Bitcoin",
+    "ETH": "Ethereum",
+    "SHIB": "Shiba Inu"
+}

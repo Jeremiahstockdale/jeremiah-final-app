@@ -42,7 +42,7 @@ export function deleteTrade(id) {
 }
 
 // need to update acc value (addMoneyById) before deleting
-// with 'pretendMoney' = shares * price
+// by adding (shares * price) to the account value
 export function getAllTrades(userId) {
     return axios.get(`${URL}/trades/${userId}`)
 }

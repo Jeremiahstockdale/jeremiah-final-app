@@ -43,14 +43,21 @@
 
 
   user-select: none;
-
 }
 
 .App Footer .right {
-
   display: flex;
   justify-content: center;
   gap: 1.5rem;
   font-size: 20px;
   margin-right: 1.5rem;
+}
+
+.App Footer .left {
+  margin-left: 1.5rem;
+  color: var(--light-grey);
+}
+
+.App Footer .left>* {
+  margin: 0;
 }

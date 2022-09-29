@@ -16,7 +16,19 @@ a {
 
 p {
   color: var(--dark-grey);
+  margin: 0;
 }
+
+h1 {
+  font-size: 4.5rem;
+  margin: 2rem 0 1rem 0;
+  /* color: var(--teal); */
+  font-size: 72px;
+  background: -webkit-radial-gradient(#616d85, #3F4756);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 
 button.primary {
   border: none;
@@ -46,6 +58,13 @@ button:hover {
   cursor: pointer;
   box-sizing: border-box;
   opacity: .9;
+  transform: translateY(-1px);
+  transition: .2s;
+}
+
+button:active {
+  transform: translateY(1px);
+  transition: .2s;
 }
 
 button {
@@ -56,7 +75,7 @@ input {
   background-color: var(--dark-grey);
   color: var(--white);
   border: solid var(--teal) 2px;
-  border-radius: 3px;
+  border-radius: 4px;
   box-sizing: border-box;
 }
 

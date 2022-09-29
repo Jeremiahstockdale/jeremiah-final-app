@@ -1,31 +1,40 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import './Nav.css'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faCompass, faUser, faChartLine } from '@fortawesome/free-solid-svg-icons'
+import { faCompass, faUser, faChartLine } from '@fortawesome/free-solid-svg-icons'
 import { UserContext } from '../../App'
 
 export default function Nav() {
 
     const { activeUser, login } = useContext(UserContext)
-    // const [activeUser, setActiveUser] = useState(false)
+
 
     return (
+        <nav className='nav-root'>
 
-        <nav className='navRoot'>
             <div className='left'>
                 <Link to='home'>
-                    <FontAwesomeIcon icon={faHome} />
+                    <div className='hoverable'>
+                        <img className='image' src='https://cdn.icon-icons.com/icons2/3207/PNG/512/deploy_octopus_icon_196033.png' alt='Alfred Pennystock, the octopus' />
+                        <p className='path'>home</p>
+                    </div>
                 </Link>
             </div>
 
             <div className='center'>
                 <Link to='navigate'>
-                    <FontAwesomeIcon icon={faCompass} />
+                    <div className='hoverable'>
+                        <FontAwesomeIcon icon={faCompass} />
+                        <p className='path'>search</p>
+                    </div>
                 </Link>
 
                 <Link to='trades'>
-                    <FontAwesomeIcon icon={faChartLine} />
+                    <div className='hoverable'>
+                        <FontAwesomeIcon icon={faChartLine} />
+                        <p className='path'>portfolio</p>
+                    </div>
                 </Link>
             </div>
 
@@ -33,14 +42,18 @@ export default function Nav() {
                 {activeUser
                     ? (
                         <Link to="profile">
-                            <FontAwesomeIcon icon={faUser} />
+                            <div className='hoverable'>
+                                <FontAwesomeIcon icon={faUser} />
+                                <p className='path'>profile</p>
+                            </div>
                         </Link>
                     )
                     : (
                         <Link to="login">
-                            <button className='primary'>Login</button>
+                            <button className='primary'>
+                                Login
+                            </button>
                         </Link>
-
                     )
                 }
             </div>

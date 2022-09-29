@@ -5,6 +5,7 @@
 
     /* --black: red;
     --pink: black; */
+    --randomNumber: random(90);
 }
 
 .oct-root {
@@ -196,7 +197,7 @@
 
 @keyframes colorChange {
     from {
-        filter: hue-rotate(-90deg);
+        filter: hue-rotate(var(--randomNumber)deg);
     }
 
     to {

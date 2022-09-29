@@ -1,69 +1,75 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faArrowUp, faHeart } from '@fortawesome/free-solid-svg-icons';
 import './StockCards.css'
 import { addLikedStock, addMoneyById, addTrade, deleteLikedStock, deleteTrade } from '../../services/http.service';
 import { UserContext } from '../../App';
 import StockHistory from '../stockHistory/StockHistory';
 import Modal from '../modal/Modal';
 import { useBoolean } from '../../hooks/useBoolean';
+import STOCK_NAMES from '../../assets/stockTickerToName.json'
 
 export default function StockCards({ symbol, value, likedStocks, activeTrades }) {
 
     const { activeUser, addFunds } = useContext(UserContext)
+
     const [isHeartClicked, setIsHeartClicked] = useState(false)
     const [likeId, setlikeId] = useState()
     const [sharesInput, setSharesInput] = useState()
-
-    const [isModalOpen, toggleIsModalOpen] = useBoolean(false)
-
     const [userOwnsThis, setUserOwnsThis] = useState()
-
     const [trade, setTrade] = useState({
         shares: 0,
         id: ''
     })
-    // console.log(activeTrades, ' test')
+
+    const [isModalOpen, toggleIsModalOpen] = useBoolean(false)
+
+    const displayName = STOCK_NAMES[symbol];
 
     var userId = activeUser?.id;
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
-    })
+    });
 
     useEffect(() => {
         likedCheck();
-        // ownCheck();
     }, [symbol])
 
     useEffect(() => {
         ownCheck();
     }, [isModalOpen])
 
-
-
     function likedCheck() {
+
         for (let i = 0; i < likedStocks?.length; i++) {
             const element = likedStocks[i];
+
             if (symbol == element.stock_symbol) {
                 setlikeId(element.id)
                 setIsHeartClicked(true)
                 return;
             }
         }
+
         setIsHeartClicked(false)
     }
 
     function ownCheck() {
+
         for (let i = 0; i < activeTrades?.length; i++) {
             const element = activeTrades[i];
+
             if (symbol == element.stock_symbol) {
                 setUserOwnsThis(true);
                 setTrade({
                     ...trade,
                     id: element.id,
-                    shares: element.shares
+                    shares: element.shares,
+                    initSharePrice: element.init_share_price
                 })
+                console.log(trade, 'test')
+
                 return;
             }
         }
@@ -108,12 +114,15 @@ export default function StockCards({ symbol, value, likedStocks, activeTrades })
                         console.error(err)
                     })
             })
-            .catch((err) => { console.error(err) })
-            .finally(() => { toggleIsModalOpen() })
+            .catch((err) => {
+                console.error(err)
+            })
+            .finally(() => {
+                toggleIsModalOpen()
+            })
     }
 
     function handleSellClicked() {
-        // toggleIsModalOpen()
 
         let sharePrice = value;
         let id = activeUser.id;
@@ -137,21 +146,50 @@ export default function StockCards({ symbol, value, likedStocks, activeTrades })
 
     return (
         <div className='stock-card-main'>
+
             <div className='stock-card-heart'>
+
                 <div className='stock-card-root'>
-                    <div className='stock-card' onClick={toggleIsModalOpen}>
+
+                    <div className={'stock-card ' + (userOwnsThis && 'owned')} onClick={toggleIsModalOpen}>
+
                         <div className='symbol-wrapper'>
-                            <div className='symbol'>{symbol}</div>
+                            <div className='symbol'>
+                                {symbol}
+                            </div>
+                            {displayName && <div
+                                className='name '
+                            >
+                                {displayName}
+                            </div>}
                         </div>
 
-                        <div className='value'>{formatter.format(value)}</div>
+                        <div className='value-arrow-wrapper'>
+                            <div>
+                                <div className='value'>
+                                    {formatter.format(value)}
+                                </div>
+                                {userOwnsThis && <p className='name'>{trade.shares} shares</p>}
+                            </div>
+
+                            {userOwnsThis && <div className={'arrow ' + (value - trade.initSharePrice < 0 && 'negative')}>
+                                {(value - trade.initSharePrice >= 0)
+                                    ? <FontAwesomeIcon icon={faArrowUp} />
+                                    : <FontAwesomeIcon icon={faArrowDown} />
+                                }
+                            </div>}
+                        </div>
+
                     </div>
                 </div>
 
-                <div className={'heart ' + (isHeartClicked ? 'clicked' : 'no-click')}
-                    onClick={handleHeartClicked}>
+                <div
+                    className={'heart ' + (isHeartClicked ? 'clicked' : 'no-click')}
+                    onClick={handleHeartClicked}
+                >
                     <FontAwesomeIcon icon={faHeart} />
                 </div>
+
             </div>
 
 
@@ -163,14 +201,15 @@ export default function StockCards({ symbol, value, likedStocks, activeTrades })
                     <p>60 day history</p>
 
                     {userOwnsThis
-                        ? <p>You own {trade.shares} share(s) worth {formatter.format(trade.shares * value)}</p>
-                        : <p>{value * sharesInput > 0 ? formatter.format(value * sharesInput) : '.'}</p>
+                        ? <p className='shares'>You own {trade.shares} share(s) worth {formatter.format(trade.shares * value)}&nbsp;
+                            ({formatter.format(trade.shares * value - trade.initSharePrice)} return)</p>
+                        : <p className='shares'>{value * sharesInput > 0 ? formatter.format(value * sharesInput) : '.'}</p>
                     }
 
                     <form onSubmit={handleBuySubmit}>
 
-                        {/* buttons */}
                         <div className='button wrapper'>
+
                             <button
                                 type='button'
                                 className='secondary'

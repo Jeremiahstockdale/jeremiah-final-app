@@ -16,12 +16,16 @@
     display: flex;
     justify-content: space-between;
     margin: 1rem 1rem;
-
-    background-color: var(--teal);
+    background-image: radial-gradient(circle, #52b5fa, #41aefc, #2fa6fd, #1b9efe, #0096ff);
+    /* background-color: var(--teal); */
     border-radius: 5px;
     align-items: center;
 
     cursor: pointer;
+}
+
+.stock-card-root .stock-card.owned {
+    background-image: radial-gradient(circle, #4dc6c1, #41c1bb, #33bcb6, #22b7b0, #00b2aa);
 }
 
 .stock-card-root .stock-card:hover {
@@ -32,8 +36,13 @@
     text-align: left;
 }
 
-.stock-card-root .symbol {
+.stock-card-root .name {
     font-weight: bold;
+    font-size: 10pt;
+}
+
+.stock-card-root .symbol.small-text {
+    font-size: 14pt;
 }
 
 .stock-card-root .value {
@@ -41,7 +50,7 @@
     display: inline-block;
     vertical-align: middle;
     text-align: right;
-    font-size: 25pt;
+    font-size: 22pt;
 }
 
 .stock-card-root button {
@@ -75,6 +84,11 @@
     color: var(--dark-grey);
 }
 
+.stock-card-main .heart>*:hover {
+    transition: .3s;
+    transform: translateY(-3px);
+}
+
 .stock-card-main .clicked>* {
     color: var(--orange);
 }
@@ -106,8 +120,9 @@
     left: -70px;
 }
 
-.stock-card-main p {
+.stock-card-main .shares {
     color: var(--white);
+    margin: 1rem;
 }
 
 .stock-card-main input {
@@ -116,4 +131,25 @@
 
 .stock-card-main button {
     margin: 0 1.5rem;
+}
+
+.stock-card-main p.name {
+    text-align: right;
+    color: var(--white);
+    font-weight: 400;
+}
+
+.stock-card-root .arrow {
+    color: var(--white);
+    padding-left: .5rem;
+}
+
+.stock-card-root .arrow.negative {
+    color: var(--red);
+}
+
+.stock-card-root .value-arrow-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }

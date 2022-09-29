@@ -11,30 +11,30 @@ export default function PaperTradePage() {
 
     const { activeUser } = useContext(UserContext)
 
-    const [isLoading, setIsloading] = useState(true)
-
     const [activeTrades, reloadActiveTrades] = useFetch(getAllTrades, activeUser?.id, [])
     const [likedStocks, reloadLikedStocks] = useFetch(getAllLikedStocks, activeUser?.id, [])
 
+    const [isLoading, setIsloading] = useState(true)
     const [tradesArray, setTradesArray] = useState([])
     const [myStockSymbols, setmyStockSymbols] = useState([])
+
     const [start, end] = startEndValues()
 
-    var percentGain = ((startEndValues()[1] - startEndValues()[0]) / startEndValues()[1] * 100).toFixed(2)
-    // percentGain = 18
-
+    var percentGain = ((end - start) / end * 100)?.toFixed(2)
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
     })
+    var difference = formatter?.format(end - start)
+    var screenWidth = window.screen.width;
 
-    var screenWidth = window.screen.width
 
     useEffect(() => {
         let stocksSymbols = []
         for (let i = 0; i < activeTrades.length; i++) {
             stocksSymbols.push(activeTrades[i].stock_symbol)
         }
+
         getPriceForCards(stocksSymbols)
         setmyStockSymbols(stocksSymbols)
     }, [activeTrades])
@@ -54,12 +54,11 @@ export default function PaperTradePage() {
         let end = activeUser?.account_value;
         let orderedTrades = []
 
-
         for (let i = 0; i < activeTrades.length; i++) {
             const element = activeTrades[i];
             start += element.init_investment_value;
 
-            for (let j = 0; j < tradesArray.length; j++) {
+            for (let j = 0; j < tradesArray?.length; j++) {
                 const trade = tradesArray[j];
                 if (trade.symbol == element.stock_symbol) {
                     end += (Number(trade.value) * Number(element.shares));
@@ -71,12 +70,11 @@ export default function PaperTradePage() {
 
         return [start, end]
     }
-    console.log(start, end)
 
     return (
         <div className={'paper-trade-page-root ' + (screenWidth <= 500 && 'mobile')}>
 
-            <h1>Your Portfolio</h1>
+            <h2>Your Portfolio</h2>
 
             {activeTrades.length == 0
                 && <h3>
@@ -84,24 +82,33 @@ export default function PaperTradePage() {
                 </h3>
             }
 
-            {end.toFixed(2) != activeUser?.account_value.toFixed(2)
+            {end != activeUser?.account_value
                 && <div className='value-wrapper'>
-                    <h2 className='money'>
-                        {formatter.format(end)}
-                    </h2>
-                    <h2 className={'percent ' + (percentGain < 0 && 'negative')}>
-                        {percentGain > 0
-                            ? '+' + percentGain + '%'
-                            : percentGain + '%'
-                        }
-                    </h2>
+
+                    <div>
+                        <h2 className='money '>{formatter.format(end)}</h2>
+                        <p className={'start-money ' + (percentGain < 0 && 'negative')}>({percentGain > 0
+                            ? '+' + difference
+                            : difference
+                        })</p>
+                    </div>
+
+                    <div>
+                        <h2 className={'percent ' + (percentGain < 0 && 'negative')}>
+                            {percentGain > 0
+                                ? '+' + percentGain + '%'
+                                : percentGain + '%'
+                            }
+                        </h2>
+                    </div>
+
                 </div>
             }
 
             {isLoading
                 ? <LoadingScreen />
                 : <div className='liked-stocks'>
-                    {tradesArray.map((fav, i) => (
+                    {tradesArray?.map((fav, i) => (
                         <StockCards
                             key={fav?.symbol}
                             value={fav?.value}

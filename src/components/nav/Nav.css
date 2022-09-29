@@ -1,5 +1,6 @@
 :root {
-    --nav-height: 40px;
+    --nav-height: 45px;
+    --pathOpacity: 0;
 }
 
 nav {
@@ -44,6 +45,10 @@ nav .center {
     font-size: 20px;
 }
 
+.nav-root>*>* {
+    transform: translateY(4px);
+}
+
 nav>*>*:hover {
     color: var(--orange);
     transform: translateY(-1.5px);
@@ -53,4 +58,33 @@ nav>*>*:hover {
 nav>*>*:active {
     transform: translateY(2px) scale(.9);
     transition: .2s;
+}
+
+.nav-root .image {
+    max-width: 1.3em;
+    height: auto;
+    margin-bottom: 0;
+    filter: invert(27%) sepia(8%) saturate(1190%) hue-rotate(181deg) brightness(92%) contrast(92%);
+}
+
+.nav-root .home {
+    align-items: center;
+}
+
+.nav-root .image:hover {
+    filter: invert(53%) sepia(20%) saturate(6017%) hue-rotate(347deg) brightness(98%) contrast(89%);
+    opacity: .85;
+}
+
+.nav-root .hoverable:hover {
+    --pathOpacity: 1;
+    transition: .2s;
+}
+
+.nav-root .path {
+    margin: 0 0 0 0;
+    font-size: .7rem;
+    transition: .3s;
+    opacity: var(--pathOpacity);
+    color: var(--dark-grey);
 }

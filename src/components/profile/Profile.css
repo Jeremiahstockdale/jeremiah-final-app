@@ -21,7 +21,7 @@
     width: fit-content;
 }
 
-.profile-root h1 {
+.profile-root h2 {
     color: var(--dark-grey);
     font-size: 3rem;
     margin: 0;

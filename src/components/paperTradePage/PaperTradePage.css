@@ -20,10 +20,29 @@
     padding-bottom: 1rem;
 }
 
+/* .paper-trade-page-root .value-wrapper {
+    border: solid green 1px;
+}
+
+.paper-trade-page-root .value-wrapper>* {
+    border: solid green 1px;
+} */
+
+.paper-trade-page-root .value-wrapper>*>* {
+    margin-top: 7px;
+    /* border: solid green 1px; */
+}
+
 .paper-trade-page-root .percent {
     color: var(--blue);
 }
 
-.paper-trade-page-root .percent.negative {
+.paper-trade-page-root .negative {
     color: var(--red);
+}
+
+.paper-trade-page-root .start-money {
+    text-align: left;
+    padding-left: 6.2rem;
+    margin: 0;
 }

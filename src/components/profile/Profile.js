@@ -9,15 +9,19 @@ import { useBoolean } from '../../hooks/useBoolean';
 
 export default function Profile() {
 
-    let navigate = useNavigate();
     const { activeUser, logout, addFunds } = useContext(UserContext)
+
     const [addedPretendMoney, setAddedPretendMoney] = useState()
+
     const [isFormShown, toggleIsFormShown] = useBoolean(false)
-    var valueDisplay = Number(activeUser.account_value);
+
+    let navigate = useNavigate();
+    var valueDisplay = Number(activeUser?.account_value);
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
     })
+
 
     function handleLogoutClicked() {
         logout()
@@ -43,12 +47,11 @@ export default function Profile() {
         setAddedPretendMoney(placeholder)
     }
 
-
     function handleAddMoneySubmit(e) {
         e.preventDefault();
 
-        let id = activeUser.id;
-        let pretendMoney = Number(activeUser.account_value) + Number(addedPretendMoney)
+        let id = activeUser?.id;
+        let pretendMoney = Number(activeUser?.account_value) + Number(addedPretendMoney)
 
         addMoneyById({ id, pretendMoney })
             .then(response => {
@@ -62,22 +65,36 @@ export default function Profile() {
 
     return (
         <div className='profile-root'>
+
             <div className='address-name'>
+
                 <div className='address-card'>
                     <FontAwesomeIcon icon={faAddressCard} />
                 </div>
+
                 <div>
-                    <h1>{activeUser.username}'s profile</h1>
-                    <p className='date'>Member since: {activeUser.creation_date.substring(0, 10)}</p>
+                    <h2>{activeUser?.username}'s profile</h2>
+                    <p className='date'>
+                        Member since: {activeUser?.creation_date.substring(0, 10)}
+                    </p>
                 </div>
+
             </div>
 
             <h2 className='money'>
                 {formatter.format(valueDisplay)}
             </h2>
-            <p className='disclaimer'>in pretend liquid assets</p>
 
-            <button className='secondary' type='button' onClick={toggleIsFormShown}>Add pretend money</button>
+            <p className='disclaimer'>in buying power</p>
+
+            <button
+                className='secondary'
+                type='button'
+                onClick={toggleIsFormShown}
+            >
+                Add pretend money
+            </button>
+
             {isFormShown && <form onSubmit={handleAddMoneySubmit}>
                 {/* <label>Add preted money</label> */}
                 <input className='text-box'
@@ -90,8 +107,16 @@ export default function Profile() {
                     max='1000'
                 />
             </form>}
+
             <div className='breaker'></div>
-            <button className='primary' onClick={handleLogoutClicked}>Log out</button>
+
+            <button
+                className='primary'
+                onClick={handleLogoutClicked}
+            >
+                Log out
+            </button>
+
         </div>
     )
 }

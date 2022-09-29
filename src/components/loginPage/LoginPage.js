@@ -7,6 +7,7 @@ export default function LoginPage() {
 
     return (
         <div className='entry-page-root'>
+
             <LoginForm />
 
             <div className='link'>
