@@ -19,6 +19,7 @@
     align-items: center;
     text-align: left;
     width: fit-content;
+    margin-bottom: 2rem;
 }
 
 .profile-root h2 {
@@ -41,7 +42,7 @@
 
 .breaker {
     width: calc(100vw - 2 * var(--root-margin));
-    height: 20vh;
+    height: 15vh;
 }
 
 .profile-root .disclaimer {

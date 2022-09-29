@@ -121,7 +121,7 @@ export default function PaperTradePage() {
             }
 
             <button
-                className='secondary'
+                className='secondary reload'
                 onClick={() => {
                     setIsloading(true);
                     getPriceForCards(myStockSymbols)

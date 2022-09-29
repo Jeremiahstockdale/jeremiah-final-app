@@ -55,7 +55,7 @@ export default function HomePage() {
             }
 
             {!isLoading && <button
-                className='secondary'
+                className='secondary reload'
                 onClick={() => {
                     setIsloading(true);
                     getPriceForCards()

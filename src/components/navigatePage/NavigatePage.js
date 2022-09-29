@@ -147,7 +147,7 @@ export default function NavigatePage() {
             }
 
             <button
-                className='secondary'
+                className='secondary reload'
                 onClick={() => {
                     getFavs(getFavSymbols(likedStocks))
                 }}

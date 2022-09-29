@@ -154,9 +154,9 @@ export default function StockCards({ symbol, value, likedStocks, activeTrades })
                     <div className={'stock-card ' + (userOwnsThis && 'owned')} onClick={toggleIsModalOpen}>
 
                         <div className='symbol-wrapper'>
-                            <div className='symbol'>
+                            <h4 className='symbol'>
                                 {symbol}
-                            </div>
+                            </h4>
                             {displayName && <div
                                 className='name '
                             >
@@ -169,7 +169,7 @@ export default function StockCards({ symbol, value, likedStocks, activeTrades })
                                 <div className='value'>
                                     {formatter.format(value)}
                                 </div>
-                                {userOwnsThis && <p className='name'>{trade.shares} shares</p>}
+                                {userOwnsThis && <p className='shares'>{trade.shares} shares</p>}
                             </div>
 
                             {userOwnsThis && <div className={'arrow ' + (value - trade.initSharePrice < 0 && 'negative')}>
@@ -198,12 +198,14 @@ export default function StockCards({ symbol, value, likedStocks, activeTrades })
                     closeModal={toggleIsModalOpen} >
 
                     <StockHistory symbol={symbol} />
-                    <p>60 day history</p>
+                    <p className='shares'>60 day history</p>
 
                     {userOwnsThis
                         ? <p className='shares'>You own {trade.shares} share(s) worth {formatter.format(trade.shares * value)}&nbsp;
                             ({formatter.format(trade.shares * value - trade.initSharePrice)} return)</p>
-                        : <p className='shares'>{value * sharesInput > 0 ? formatter.format(value * sharesInput) : '.'}</p>
+                        : <p className='shares'>
+                            {value * sharesInput > 0 ? formatter.format(value * sharesInput) : <p>&nbsp;</p>}
+                        </p>
                     }
 
                     <form onSubmit={handleBuySubmit}>

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,500&family=Poppins:wght@200;400;600&display=swap');
+
 :root {
   --footer-height: 5rem;
   --blue: #0096FF;
@@ -17,16 +19,41 @@ a {
 p {
   color: var(--dark-grey);
   margin: 0;
+
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
 }
 
 h1 {
-  font-size: 4.5rem;
+  font-size: 65px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
   margin: 2rem 0 1rem 0;
-  /* color: var(--teal); */
-  font-size: 72px;
   background: -webkit-radial-gradient(#616d85, #3F4756);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+h2 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+h3,
+h4 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+
+h5,
+h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 200;
+  margin: 0;
+}
+
+button.reload {
+  margin-bottom: 1rem;
 }
 
 
