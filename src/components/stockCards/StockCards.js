@@ -169,7 +169,7 @@ export default function StockCards({ symbol, value, likedStocks, activeTrades })
                                 <div className='value'>
                                     {formatter.format(value)}
                                 </div>
-                                {userOwnsThis && <p className='shares'>{trade.shares} shares</p>}
+                                {userOwnsThis && <p className='shares-card'>{trade.shares} shares</p>}
                             </div>
 
                             {userOwnsThis && <div className={'arrow ' + (value - trade.initSharePrice < 0 && 'negative')}>

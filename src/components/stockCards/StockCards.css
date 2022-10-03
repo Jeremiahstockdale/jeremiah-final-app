@@ -124,8 +124,9 @@
 }
 
 .stock-card-main .shares {
-    color: var(--dark-grey);
-    margin: 1rem;
+    color: var(--white);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .stock-card-main input {
@@ -142,9 +143,8 @@
     font-weight: 400;
 }
 
-.stock-card-main .shares {
+.stock-card-main .shares-card {
     font-size: 12pt;
-    margin: 0;
     text-align: right;
     color: var(--white);
 }
