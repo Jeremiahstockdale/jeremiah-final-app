@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCompass, faUser, faChartLine } from '@fortawesome/free-solid-svg-icons'
 import { UserContext } from '../../App'
+import octopusIcon from '../../images/octopus_icon.png'
 
 export default function Nav() {
 
-    const { activeUser, login } = useContext(UserContext)
+    const { activeUser } = useContext(UserContext)
 
 
     return (
@@ -16,7 +17,7 @@ export default function Nav() {
             <div className='left'>
                 <Link to='home'>
                     <div className='hoverable'>
-                        <img className='image' src='https://cdn.icon-icons.com/icons2/3207/PNG/512/deploy_octopus_icon_196033.png' alt='Alfred Pennystock, the octopus' />
+                        <img className='image' src={octopusIcon} alt='Home' />
                         <p className='path'>home</p>
                     </div>
                 </Link>

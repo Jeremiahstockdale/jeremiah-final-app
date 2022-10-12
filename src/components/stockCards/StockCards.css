@@ -113,8 +113,8 @@
 
 .stock-history-root.desktop .load-main {
     position: absolute;
-    top: -200px;
-    left: -360px;
+    top: -25vh;
+    left: -25vw;
 }
 
 .stock-history-root.mobile .load-main {

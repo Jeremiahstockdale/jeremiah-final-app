@@ -26,10 +26,44 @@ export default function NavigatePage() {
     const [likedStocks, reloadLikedStocks] = useFetch(getAllLikedStocks, activeUser?.id, [])
     const [activeTrades, reloadActiveTrades] = useFetch(getAllTrades, activeUser?.id, [])
 
+    const [randomPlaceholerTicker, setRandomPlaceholerTicker] = useState('AAPL')
+    let stockNames = [
+        "TESLA",
+        "APPLE",
+        "IBM",
+        "AMAZON",
+        "ALPHABET",
+        "COSTCO",
+        "DISNEY",
+        "FACEBOOK",
+        "MASTERCARD",
+        "MICROSOFT",
+        "NETFLIX",
+        "NIKE",
+        "PINTEREST",
+        "SHOPIFY",
+        "SPOTIFY",
+        "TELADOC HEALTH",
+        "CRUDE OIL WTI",
+        "DOGECOIN",
+        "BITCOIN",
+        "ETHEREUM",
+        "SHIBA INU"
+    ]
+
+    function pickRandomProperty(obj) {
+        var len = 20, randomPos;
+
+        randomPos = Math.floor(Math.random() * len);
+        setRandomPlaceholerTicker(stockNames[randomPos])
+    }
+
 
     useEffect(() => {
         getFavs(getFavSymbols(likedStocks))
     }, [likedStocks])
+
+    useEffect(() => { pickRandomProperty() }, [])
 
     /**
      * convert the data from our API into an array of stock symbols
@@ -99,7 +133,7 @@ export default function NavigatePage() {
                         type='text'
                         onChange={handleSearchChange}
                         value={search}
-                        placeholder='AAPL'
+                        placeholder={randomPlaceholerTicker}
                     />
 
                     <div onClick={handleSearchSubmit} className='magnifying-glass'>

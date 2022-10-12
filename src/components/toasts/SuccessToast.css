@@ -1,0 +1,29 @@
+.success-root {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.success-root .success-wrapper {
+    border-radius: 5px;
+    position: relative;
+
+    margin-left: 10px;
+    width: 250px;
+    height: 75px;
+
+    background-color: var(--orange);
+}
+
+.success-root .success {
+    color: var(--dark-grey);
+    position: absolute;
+    padding-left: 9px;
+    padding-top: 9px;
+    width: fit-content;
+    height: fit-content;
+    margin-top: 0;
+}

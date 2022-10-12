@@ -78,7 +78,9 @@ export default function StockCards({ symbol, value, likedStocks, activeTrades })
     function handleInputChange(e) {
         let { value } = e.target;
         let newValue = Number(value)
-        setSharesInput(newValue)
+        if (newValue < 1000000000000) {
+            setSharesInput(newValue)
+        }
     }
 
     function handleHeartClicked() {
@@ -202,9 +204,9 @@ export default function StockCards({ symbol, value, likedStocks, activeTrades })
 
                     {userOwnsThis
                         ? <p className='shares'>You own {trade.shares} share(s) worth {formatter.format(trade.shares * value)}&nbsp;
-                            ({formatter.format(trade.shares * value - trade.initSharePrice)} return)</p>
+                            ({formatter.format(trade.shares * value - trade.initSharePrice * trade.shares)} return)</p>
                         : <p className='shares'>
-                            {value * sharesInput > 0 ? formatter.format(value * sharesInput) : <p>&nbsp;</p>}
+                            {value * sharesInput > 0 ? 'total cost ' + formatter.format(value * sharesInput) : <p>&nbsp;</p>}
                         </p>
                     }
 

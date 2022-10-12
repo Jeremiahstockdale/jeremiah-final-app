@@ -104,6 +104,7 @@ input {
   border: solid var(--teal) 2px;
   border-radius: 4px;
   box-sizing: border-box;
+  caret-color: var(--teal);
 }
 
 body {
